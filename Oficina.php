@@ -30,7 +30,7 @@ class Oficina extends Contrato{
         $count = count($canales);
         $a=0;
         $contador = 0;
-        while( $salida && $a < $count){
+        while($salida && $a < $count){
             $importe  = $canales->getImporte();
             $contador += $importe; 
             $a++;

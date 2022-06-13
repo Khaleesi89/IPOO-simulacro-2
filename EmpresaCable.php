@@ -74,12 +74,41 @@ class EmpresaCable{
     plan con los mismos canales y los mismos MG (en caso de que el plan incluyera). */
 
     public function incorporarPlan($plan){
-
-        
+        $sePuede = $this->verCanalesyMegas($plan);
+        $arrayPlanes = $this->getColeccPlanes();
+        if($sePuede == true){
+            array_push($arrayPlanes,$plan);
+            $this->setColeccPlanes($arrayPlanes);
+        }  
 
     }
 
-
+//si retorna true es que se pudo hacer la incorporacion del plan y si es false es lo contrario
+    public function verCanalesyMegas($plan){
+        $arrayPlanes = $this->getColeccPlanes();
+        $i = 0;
+        $salida = true;
+        $count = count($arrayPlanes);
+        while($salida && $i < $count){
+            $planComparar = $arrayPlanes[$i];
+            $canalesComparar = $planComparar->getcoleCanales();
+            $megasComparar = $planComparar->getMegas();
+            $megasPlan = $plan->getMegas();
+            $canalesPlan = $plan->getcoleCanales();
+            if($megasComparar == $megasPlan){
+                $salida = false;
+            }else{
+                if(count($canalesComparar) == count($canalesPlan)){
+                    $diferencia = array_diff($canalesComparar,$canalesPlan);
+                    if(count($diferencia) == 0){
+                        $salida = false;
+                    }
+                }
+            }
+            $i++;
+        }
+        return $salida;
+    }
 
 
     /* incorporarContrato: método que recibe por parámetro el plan, una referencia al cliente, la fecha de
@@ -87,7 +116,8 @@ class EmpresaCable{
     valor del parámetro es True se trata de un contrato realizado via web). */
 
     public function incorporarContrato($plan,$cliente,$fechaInicio,$vencimiento,$tipoContrato){
-
+        //public function __construct($inicio,$vencimiento,$plancito,$state,$cash,$renueva,$persona)
+        //$contrato = 
     }
 
 
@@ -100,6 +130,7 @@ class EmpresaCable{
 
 
     public function retornarImporteContratos($codigoPlan){
+        
 
     }
 
